@@ -1,6 +1,6 @@
--- =======================
--- INSERTS DE DATOS INICIALES
--- =======================
+-- ==========================
+-- Datos Iniciales para la bd
+-- ==========================
 
 -- Monedas
 INSERT INTO moneda (simbolo, nombre) VALUES
@@ -67,7 +67,7 @@ INSERT INTO clientes (dni, nombre, telefono, direccion) VALUES
 ('99999999', 'Sergio Paredes', '900000009', 'Av. Grau 1011'),
 ('00000000', 'Natalia Vega', '900000010', 'Calle Cusco 1122');
 
--- Configuración (una sola entrada como corresponde)
+-- Configuración
 INSERT INTO configuracion (ruc, nombre, telefono, correo, direccion, mensaje, logo, moneda, impuesto, cant_factura, penalidad_por_dia)
 VALUES ('12345678901', 'Mi Empresa S.A.C.', '012345678', 'empresa@correo.com', 'Av. Principal 123', '¡Gracias por su preferencia!', 'logo.png', 1, 18, 1000, 10.00);
 
@@ -84,7 +84,7 @@ INSERT INTO vehiculos (placa, id_marca, id_tipo, modelo, foto, precio_por_dia) V
 ('III999', 9, 9, 'Civic', 'https://res-console.cloudinary.com/drrlway38/thumbnails/v1/image/upload/v1751315161/dmlzdGEtZGVsLWNvY2hlLTNkX2MydHo3aQ==/preview', 105),
 ('JJJ000', 10, 10, 'Swift', 'https://res-console.cloudinary.com/drrlway38/thumbnails/v1/image/upload/v1751315161/dmlzdGEtZGVsLWNvY2hlLTNkX2MydHo3aQ==/preview', 95);
 
--- Alquileres (todos en EN PRESTAMO y estado activo)
+-- Alquileres
 INSERT INTO alquiler (id_cliente, id_vehiculo, id_moneda, num_dias, precio_dia, abono, fecha_prestamo, hora, fecha_estimada_devolucion, id_doc, observacion, estado, penalidad_por_dia)
 VALUES
 (1, 1, 1, 5, 100.00, 200.00, '2025-06-20', '09:00:00', '2025-06-25', 1, 'Sin observación', 'EN PRESTAMO', 10.00),
@@ -99,7 +99,7 @@ VALUES
 (10, 10, 2, 2, 95.00, 50.00, '2025-06-29', '17:00:00', '2025-07-01', 10, 'Sin observación', 'EN PRESTAMO', 10.00);
 
 
--- Usuario Administrador (IMPORTANTE para iniciar sesión)
+-- User Administrador
 INSERT INTO usuarios (
   usuario, nombre, apellido, correo, telefono, direccion, clave, estado, fecha, rol
 ) VALUES (
