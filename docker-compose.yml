@@ -38,7 +38,9 @@ services:
 
 networks:
   movixpress-net:
+    name: movixpress-net
     driver: bridge
 
 volumes:
   mysql_data:
+    name: movixpress-mysql-data
