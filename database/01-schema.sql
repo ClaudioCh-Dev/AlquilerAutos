@@ -29,6 +29,8 @@ CREATE TABLE `documentos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE UNIQUE INDEX idx_documentos_documento ON documentos(documento);
+
 -- =======================
 -- Tabla: marcas
 -- =======================
@@ -40,6 +42,7 @@ CREATE TABLE `marcas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE UNIQUE INDEX idx_marcas_marca ON marcas(marca);
 
 -- =======================
 -- Tabla: tipos
@@ -51,6 +54,8 @@ CREATE TABLE `tipos` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE UNIQUE INDEX idx_tipos_tipo ON tipos(tipo);
 
 -- =======================
 -- Tabla: clientes
@@ -65,6 +70,9 @@ CREATE TABLE `clientes` (
   `estado` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE INDEX idx_clientes_dni ON clientes(dni);
+CREATE INDEX idx_clientes_nombre ON clientes(nombre);
 
 -- =======================
 -- Tabla: usuarios
@@ -85,6 +93,9 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE INDEX idx_usuarios_correo ON usuarios(correo);
+CREATE INDEX idx_usuarios_nombre ON usuarios(nombre);
+
 -- =======================
 -- Tabla: configuracion
 -- =======================
@@ -94,7 +105,7 @@ CREATE TABLE `configuracion` (
   `nombre` varchar(200) NOT NULL,
   `telefono` varchar(15) NOT NULL,
   `correo` varchar(100) NOT NULL,
-  `direccion` varchar(200) NOT NULL,
+  `direccion` varchar(255) NOT NULL,
   `mensaje` text NOT NULL,
   `logo` varchar(10) NOT NULL,
   `moneda` int(11) NOT NULL,
@@ -110,11 +121,11 @@ CREATE TABLE `configuracion` (
 -- =======================
 CREATE TABLE `vehiculos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `placa` varchar(50) NOT NULL,
+  `placa` varchar(25) NOT NULL,
   `id_marca` int(11) NOT NULL,
   `id_tipo` int(11) NOT NULL,
-  `modelo` varchar(50) NOT NULL,
-  `foto` varchar(100) NOT NULL,
+  `modelo` varchar(100) NOT NULL,
+  `foto` text NOT NULL,
   `actividad` ENUM('PRESTADO', 'LIBRE') NOT NULL DEFAULT 'LIBRE',
   `estado` int(11) NOT NULL DEFAULT 1,
   `precio_por_dia` decimal(10,2) DEFAULT 1,
@@ -123,6 +134,10 @@ CREATE TABLE `vehiculos` (
   FOREIGN KEY (`id_marca`) REFERENCES `marcas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`id_tipo`) REFERENCES `tipos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE UNIQUE INDEX idx_vehiculos_placa ON vehiculos(placa);
+CREATE INDEX idx_vehiculos_marca ON vehiculos(id_marca);
+CREATE INDEX idx_vehiculos_tipo ON vehiculos(id_tipo);
 
 -- =======================
 -- Tabla: alquiler
@@ -150,5 +165,12 @@ CREATE TABLE `alquiler` (
   FOREIGN KEY (`id_doc`) REFERENCES `documentos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`id_moneda`) REFERENCES `moneda` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE INDEX idx_alquiler_cliente ON alquiler(id_cliente);
+CREATE INDEX idx_alquiler_vehiculo ON alquiler(id_vehiculo);
+CREATE INDEX idx_alquiler_moneda ON alquiler(id_moneda);
+CREATE INDEX idx_alquiler_documento ON alquiler(id_doc);
+CREATE INDEX idx_alquiler_estado ON alquiler(estado);
+CREATE INDEX idx_alquiler_fecha ON alquiler(fecha_prestamo);
 
 COMMIT;
